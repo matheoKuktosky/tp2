@@ -1,51 +1,53 @@
 const fs = require('fs').promises
-const path = './data/heroes.json'
+const path = './data/users.json'
 
-async function getHeroes(){
-    const heroes = await fs.readFile(path, 'utf-8')
-    return JSON.parse(heroes)
+async function getUsers(){
+    const users = await fs.readFile(path, 'utf-8')
+    return JSON.parse(users)
 }
 
-async function getHeroe(id){
-    const heroes = await getHeroes()
-    return heroes.find(heroe => heroe.id == id)
-
+async function getUser(id){
+    const users = await getUsers()
+    return users.find(user => user.id == id)
 }
 
-async function addHeroe(heroe){
-    const heroes = await getHeroes()
-    heroes.sort((a, b)  => a.id - b.id)
-    const lastId = heroes[heroes.length-1].id
-    heroe.id = lastId + 1
-    heroes.push(heroe)
-    await fs.writeFile(path, JSON.stringify(heroes, null, ' '))
+async function addUser(user){
+    const users = await getUsers()
+    users.sort((a, b)  => a.id - b.id)
+    const lastId = users[users.length-1].id
+    user.id = lastId + 1
+    users.push(user)
+    await fs.writeFile(path, JSON.stringify(users, null, ' '))
     
-    return heroe
+    return user
 }
 
-async function updateHeroe(heroe){
-    const heroes = await getHeroes()
-    const index = heroes.findIndex(her => her.id == heroe.id)
-    if(heroe.name){
-        heroes[index].name = heroe.name
+async function updateUser(user){
+    const users = await getUsers()
+    const index = users.findIndex(usr => usr.id == user.id)
+    if(user.name){
+        users[index].name = user.name
     }
-    if(heroe.power){
-        heroes[index].power = heroe.power
+    if(user.username){
+        users[index].username = user.username
     }
-    if(heroe.iq){
-        heroes[index].iq = heroe.iq
+    if(user.password){
+        users[index].password = user.password
+    }
+    if(user.mail){
+        users[index].mail = user.mail
     }
 
-    await fs.writeFile(path, JSON.stringify(heroes, null, ' '))
+    await fs.writeFile(path, JSON.stringify(users, null, ' '))
 
-    return heroes[index]
+    return users[index]
 }
 
-async function deleteHeroe(id){
-    const heroes = await getHeroes()
-    const index = heroes.findIndex(her => her.id == id)
-    heroes.splice(index, 1)
-    await fs.writeFile(path, JSON.stringify(heroes, null, ' '))
+async function deleteUser(id){
+    const users = await getUsers()
+    const index = users.findIndex(usr => usr.id == id)
+    users.splice(index, 1)
+    await fs.writeFile(path, JSON.stringify(users, null, ' '))
 }
 
-module.exports = {getHeroes, getHeroe, addHeroe, updateHeroe, deleteHeroe}
+module.exports = {getUsers, getUser, addUser, updateUser, deleteUser}
