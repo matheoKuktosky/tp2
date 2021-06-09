@@ -2,6 +2,26 @@
 
 El proyecto sera una red social para que los usuarios puedan formar grupos de juego. Asi cuando quiera jugar algo que se requiera un minimo de 4 personas pueda buscar un grupo para tal.
 
+## Seteando el desarrollo de entorno
+
+1. Clone el Repo en su local
+
+```
+git clone https://github.com/matheoKuktosky/tp2.git
+```
+
+2. Instale todas las dependencias
+
+```
+npm i
+```
+
+3. Levanta el proyecto
+
+```
+npm start
+```
+
 ## Entidades
 
 - Usuario
@@ -10,6 +30,15 @@ El proyecto sera una red social para que los usuarios puedan formar grupos de ju
 - PublicacionesXUsuarios
 - PubliacionesxPostulantes
 - PublicacionesXCategorias
+
+## Actor
+
+- Usuario
+
+## Roles
+
+- Postulante
+- Creador
 
 # API endpoints
 
@@ -47,3 +76,7 @@ El proyecto sera una red social para que los usuarios puedan formar grupos de ju
 
 - Matheo Kuktosky
 - Tomas Baril
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
