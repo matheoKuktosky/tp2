@@ -1,0 +1,44 @@
+[
+ {
+  "id": 1,
+  "name": "Superman",
+  "power": 9999,
+  "iq": 5000
+ },
+ {
+  "id": 2,
+  "name": "Batman",
+  "power": 3000,
+  "iq": 9999
+ },
+ {
+  "id": 3,
+  "name": "Wonder Woman",
+  "power": 9000,
+  "iq": 7000
+ },
+ {
+  "id": 4,
+  "name": "Flash",
+  "power": 8000,
+  "iq": 6000
+ },
+ {
+  "id": 5,
+  "name": "Aquaman",
+  "power": 8000,
+  "iq": 6000
+ },
+ {
+  "id": 6,
+  "name": "Green Lantern",
+  "power": 8000,
+  "iq": 5000
+ },
+ {
+  "name": "Green Arrow",
+  "power": "2000",
+  "iq": "3000",
+  "id": 7
+ }
+]
