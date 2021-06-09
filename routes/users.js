@@ -10,7 +10,7 @@ router.get('/', async (req, res, next) => {
 })
 
 router.get('/:id', async (req,res) => {
-    let User = await dataUser.getUser(req.params.id)
+    let user = await dataUser.getUser(req.params.id)
     if(user)
         res.json(user)
     else
@@ -20,11 +20,12 @@ router.get('/:id', async (req,res) => {
 
 router.post('/new', async (req,res) => {
     const schema = joi.object({
-        name: joi.string().min(3).required(),
-        power: joi.number().min(0).max(9999).required(),
-        iq: joi.number().min(0).max(9999).required(),
+        name: joi.string().min(3).max(15).required(),
+        username: joi.string().min(3).max(15).required(),
+        password: joi.string().min(3).max(15).required(),
+        email: Joi.string().email().max(15).required()
     })
-    const result  = schema.validate(req.body.User)
+    const result  = schema.validate(req.body.user)
     if(result.error){
         res.status(400).send(result.error.details[0].message)
     }
@@ -40,7 +41,7 @@ router.post('/new', async (req,res) => {
 })
 
 router.put('/:id', async (req,res) => {
-    const user = req.body.User
+    const user = req.body.user
     const updatedUser = await dataUser.updateUser({
         ...user,
         id: req.params.id
@@ -53,8 +54,14 @@ router.put('/:id', async (req,res) => {
 })
 
 router.delete('/:id', async (req,res) => {
-    //hacer get de User para saber si existe antes de borrarlo asi muestro 200
-    await dataUser.deleteUser(req.params.id)    
+    let user = await dataUser.getUser(req.params.id)
+    
+    if(user){
+        await dataUser.deleteUser(req.params.id)    
+        res.status(202).send('User deleted')
+    }
+    else
+        res.status(404).send('User not found')
 })
 
 module.exports = router

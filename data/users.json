@@ -2,43 +2,43 @@
  {
   "id": 1,
   "name": "Superman",
-  "power": 9999,
-  "iq": 5000
+  "username": "elClarkKent",
+  "password": "kryptonita",
+  "mail": "mail@mail.com"
  },
  {
   "id": 2,
   "name": "Batman",
-  "power": 3000,
-  "iq": 9999
+  "username": "bruceWayne",
+  "password": "papimami",
+  "mail": "mail@mail.com"
  },
  {
   "id": 3,
   "name": "Wonder Woman",
-  "power": 9000,
-  "iq": 7000
+  "username": "dianna",
+  "password": "latigazo",
+  "mail": "mail@mail.com"
  },
  {
   "id": 4,
   "name": "Flash",
-  "power": 8000,
-  "iq": 6000
+  "username": "elquecorre",
+  "password": "usainbolt",
+  "mail": "mail@mail.com"
  },
  {
   "id": 5,
   "name": "Aquaman",
-  "power": 8000,
-  "iq": 6000
+  "username": "elreideatlantis",
+  "password": "tiburon123",
+  "mail": "mail@mail.com"
  },
  {
   "id": 6,
   "name": "Green Lantern",
-  "power": 8000,
-  "iq": 5000
- },
- {
-  "name": "Green Arrow",
-  "power": "2000",
-  "iq": "3000",
-  "id": 7
+  "username": "piunpiun",
+  "password": "anilloverde",
+  "mail": "mail@mail.com"
  }
 ]
