@@ -72,8 +72,36 @@ npm start
 | PUT    | /categorias/:id | Actualiza los datos de la categoria |
 | DELETE | /categorias/:id | Borra la categoria                  |
 
-## Grupo
+# Casos de Uso
+## Registrar usuario
+El usuario podrá registrarse ingresando sus datos(Nombre, Usuario, Contraseña y Mail) y en caso de que sean validos se le creara una cuenta.
 
+## Modificar datos de usuario
+El usuario podrá acceder a sus datos mediante su perfil y en el mimso podrá modificar su mail, nombre y contraseña.
+
+## Crear publicación
+El usuario podrá crear publicaciones con un titulo, categoria y cantidad maxima de postulantes para la misma. En caso de que los datos ingresados sean validos, su publicacion sera creada.
+
+## Modificar publicación
+El usuario podrá modificar los datos de su publicación una vez esta este creada.
+
+## Borrar publicación
+El usuario podrá borrar su publicación mediante su listado de publicaciones.
+
+## Postularse en una publicación
+El usuario podrá postularse a cualquier publicacion disponible en su pagina inicial desde que esa no haya alcanzado su numero maximo de postulantes.
+
+## Retirar postulación en una publicación
+El usuario podrá retirar su postulación de cualquier publicacion en la que se haya postulado previamente.
+
+## Aceptar postulación
+El usuario creador de una publicación podrá aceptar los postulantes de la misma
+
+## Rechazar postulación
+El usuario creador de una publicación podrá rechazar los postulantes de la misma
+
+# Grupo
+## Integrantes
 - Matheo Kuktosky
 - Tomas Baril
 
