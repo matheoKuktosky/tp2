@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const publicacionData = require('../data/publicacion')
+const publicacionData = require('../data/publicaciondb')
 const joi = require('joi')
 
 router.get('/', async (req, res, next) => {
@@ -19,7 +19,6 @@ router.get('/:id', async (req,res) => {
 router.post('/new', async (req,res) => {
     const schema = joi.object({
         nombre: joi.string().min(3).required(),
-        categoria: joi.string().min(3).required(),
         cantidadPostulantes: joi.number().min(0).max(100).required(),
     })
     const result  = schema.validate(req.body.publicacion)
@@ -41,13 +40,12 @@ router.put('/:id', async (req,res) => {
     const publicacion = req.body.publicacion
     const updatedPublicaicon = await publicacionData.updatePublicacion({
         ...publicacion,
-        id: req.params.id
+        _id: req.params.id
     })
     if(updatedPublicaicon)
         res.json(updatedPublicaicon)
     else
         res.status(404).send('Publicacion not updated')
-    
 })
 
 router.delete('/:id', async (req,res) => {
