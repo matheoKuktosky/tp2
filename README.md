@@ -28,8 +28,6 @@ npm start
 - Publicacion
 - Categoria
 - Postulacion
-- PublicacionesXUsuarios
-- PublicacionesXCategorias
 
 ## Actor
 
