@@ -1,7 +1,7 @@
 //    <iframe width="100%" height="710" frameborder="0" scrolling="no" src="https://www.sofascore.com/embed/player/neymar/124712" id="sofa-player-embed-124712">    </iframe><script>    (function (el) {      window.addEventListener("message", (event) => {        if (event.origin.startsWith("https://www.sofascore")) {          if (el.id === event.data.id) {            el.style.height = event.data.height + "px";          }        }      });    })(document.getElementById("sofa-player-embed-124712"));    </script>  
 const express = require('express')
 const router = express.Router()
-const dataUser = require('../data/users')
+const dataUser = require('../data/usersdb') //cambiar a usersDB cuando migre a MONGOdb 
 const joi = require('joi')
 /* GET users listing. */
 router.get('/', async (req, res, next) => {
@@ -23,7 +23,7 @@ router.post('/new', async (req,res) => {
         name: joi.string().min(3).max(15).required(),
         username: joi.string().min(3).max(15).required(),
         password: joi.string().min(3).max(15).required(),
-        email: Joi.string().email().max(15).required()
+        mail: joi.string().email().max(15).required()
     })
     const result  = schema.validate(req.body.user)
     if(result.error){
@@ -57,7 +57,7 @@ router.delete('/:id', async (req,res) => {
     let user = await dataUser.getUser(req.params.id)
     
     if(user){
-        await dataUser.deleteUser(req.params.id)    
+        await dataUser.deleteUser(req.params.id)
         res.status(202).send('User deleted')
     }
     else
