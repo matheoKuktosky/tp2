@@ -27,8 +27,8 @@ npm start
 - Usuario
 - Publicacion
 - Categoria
+- Postulacion
 - PublicacionesXUsuarios
-- PubliacionesxPostulantes
 - PublicacionesXCategorias
 
 ## Actor
