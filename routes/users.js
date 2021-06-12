@@ -1,9 +1,8 @@
-//    <iframe width="100%" height="710" frameborder="0" scrolling="no" src="https://www.sofascore.com/embed/player/neymar/124712" id="sofa-player-embed-124712">    </iframe><script>    (function (el) {      window.addEventListener("message", (event) => {        if (event.origin.startsWith("https://www.sofascore")) {          if (el.id === event.data.id) {            el.style.height = event.data.height + "px";          }        }      });    })(document.getElementById("sofa-player-embed-124712"));    </script>  
 const express = require('express')
 const router = express.Router()
-const dataUser = require('../data/usersdb') //cambiar a usersDB cuando migre a MONGOdb 
+const dataUser = require('../data/usersdb') 
 const joi = require('joi')
-/* GET users listing. */
+
 router.get('/', async (req, res, next) => {
     let users = await dataUser.getUsers()
     res.json(users)
@@ -18,9 +17,8 @@ router.get('/:id', async (req,res) => {
     
 })
 
-router.post('/new', async (req,res) => {
+router.post('/', async (req,res) => {
     const schema = joi.object({
-        name: joi.string().min(3).max(15).required(),
         username: joi.string().min(3).max(15).required(),
         password: joi.string().min(3).max(15).required(),
         mail: joi.string().email().max(15).required()
@@ -63,6 +61,16 @@ router.delete('/:id', async (req,res) => {
     else
         res.status(404).send('User not found')
 })
+
+router.post('/login', async (req, res)=>{
+    try {
+      const user = await dataUser.findByCredentials(req.body.mail, req.body.password);
+      const token = dataUser.generateAuthToken(user);
+      res.send({user, token});
+    } catch (error) {
+        res.status(401).send(error.message);
+    }
+});
 
 module.exports = router
 

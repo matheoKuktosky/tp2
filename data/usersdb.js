@@ -1,5 +1,8 @@
 const connection = require('./connection')
 let objectId = require('mongodb').ObjectId
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 async function getUsers(){
     const clientmongo = await connection.getConnection();
@@ -21,6 +24,7 @@ async function getUser(id){
 
 async function addUser(user){
     const clientmongo = await connection.getConnection();
+    user.password = await bcrypt.hash(user.password, 8);
     const result = await clientmongo.db('Proyecto_final')
                     .collection('users')
                     .insertOne(user);
@@ -31,7 +35,6 @@ async function updateUser(user){
     const clientmongo = await connection.getConnection();
     const query = {_id: new objectId(user._id)};
     const newvalues = { $set:{
-            name: user.name,
             username: user.username,
             password: user.password,
             mail: user.mail
@@ -52,4 +55,27 @@ async function deleteUser(id){
     return result;
 }
 
-module.exports = {getUsers, getUser, addUser, updateUser, deleteUser}
+async function findByCredentials(mail, password){
+    const connectiondb = await connection.getConnection();
+    const user = await connectiondb.db('Proyecto_final')
+                        .collection('users')
+                        .findOne({mail: mail});
+
+    if(!user){
+        throw new Error('Credenciales no validas');
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if(!isMatch){
+        throw new Error('Credenciales no validas');
+    }
+    
+    return user;
+}
+
+function generateAuthToken(user){
+    const token = jwt.sign({_id:user._id}, process.env.SECRET, {expiresIn: '2h'});
+    return token;
+}
+
+module.exports = {getUsers, getUser, addUser, updateUser, deleteUser, findByCredentials, generateAuthToken}
