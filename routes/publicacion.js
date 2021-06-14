@@ -16,24 +16,25 @@ router.get('/:id', async (req,res) => {
         res.status(404).send('publicacion not found')
 })
 
-router.post('/new', async (req,res) => {
+router.post('/', async (req,res) => {
     const schema = joi.object({
-        nombre: joi.string().min(3).required(),
-        cantidadPostulantes: joi.number().min(0).max(100).required(),
+        titulo: joi.string().min(1).required(),
+        creador: joi.string().min(1).required(),
+        categoria: joi.string().min(1).required(),
+        cantBuscada: joi.number().min(1).max(200).required(),
     })
-    const result  = schema.validate(req.body.publicacion)
+    const result  = schema.validate(req.body)
     if(result.error){
         res.status(400).send(result.error.details[0].message)
     }
     else{
-        const publicacion = req.body.publicacion
+        const publicacion = req.body
         const insertedPublicacion = await publicacionData.addPublicacion(publicacion)
         if(insertedPublicacion)
-            res.json(insertedPublicacion)
+            res.status(200).send('Publicacion created')    
         else
             res.status(404).send('Publicacion not inserted')        
-    }
-    
+    }  
 })
 
 router.put('/:id', async (req,res) => {
