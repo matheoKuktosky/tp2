@@ -22,6 +22,14 @@ async function getUser(id){
     return user;
 }
 
+async function getUserByEmail(mail){
+    const clientmongo = await connection.getConnection();
+    const user = await clientmongo.db('Proyecto_final')
+                    .collection('users')
+                    .findOne({mail: mail});
+    return user;
+}
+
 async function addUser(user){
     const clientmongo = await connection.getConnection();
     user.password = await bcrypt.hash(user.password, 8);
@@ -78,4 +86,4 @@ function generateAuthToken(user){
     return token;
 }
 
-module.exports = {getUsers, getUser, addUser, updateUser, deleteUser, findByCredentials, generateAuthToken}
+module.exports = {getUsers, getUser, getUserByEmail, addUser, updateUser, deleteUser, findByCredentials, generateAuthToken}
