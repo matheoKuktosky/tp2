@@ -21,7 +21,7 @@ router.post('/', async (req,res) => {
     const schema = joi.object({
         username: joi.string().min(3).max(15).required(),
         password: joi.string().min(3).max(15).required(),
-        mail: joi.string().email().max(15).required()
+        mail: joi.string().email().max(30).required()
     })
     const result  = schema.validate(req.body.user)
     if(result.error){
@@ -29,11 +29,17 @@ router.post('/', async (req,res) => {
     }
     else{
         const user = req.body.user
-        const insertedUser = await dataUser.addUser(user)
-        if(insertedUser)
-            res.json(insertedUser)
-        else
-            res.status(404).send('User not inserted')        
+        const userWithMail = await dataUser.getUserByEmail(user.mail)
+        if(userWithMail){
+            res.status(404).send('Email already registered')
+        }
+        else{
+            const insertedUser = await dataUser.addUser(user)
+            if(insertedUser)
+                res.json(insertedUser)
+            else
+                res.status(404).send('User not inserted')
+        }                
     }
     
 })
