@@ -11,6 +11,26 @@ async function getPublicaciones(){
     return publicacion;
 }
 
+async function getPublicacionesUsuario(id){
+    const clientmongo = await connection.getConnection();
+   console.log(clientmongo);
+    const publicacion = await clientmongo.db('Proyecto_final')
+                    .collection('publicacion')
+                    .find({idUsuario: id})
+                    .toArray();
+    return publicacion;
+}
+
+async function getPublicacionesCategoria(id){
+    const clientmongo = await connection.getConnection();
+   console.log(clientmongo);
+    const publicacion = await clientmongo.db('Proyecto_final')
+                    .collection('publicacion')
+                    .find({idCategoria: id})
+                    .toArray();
+    return publicacion;
+}
+
 async function getPublicacion(id){
     const clientmongo = await connection.getConnection();
     const publicacion = await clientmongo.db('Proyecto_final')
@@ -50,4 +70,4 @@ async function deletePublicacion(id){
     return result;
 }
 
-module.exports = {getPublicaciones, getPublicacion, addPublicacion, updatePublicacion, deletePublicacion};
+module.exports = {getPublicaciones, getPublicacion, addPublicacion, updatePublicacion, deletePublicacion, getPublicacionesUsuario, getPublicacionesCategoria};

@@ -8,19 +8,27 @@ router.get('/', async (req, res, next) => {
     res.json(publicaciones)
 })
 
-router.get('/:id', async (req,res) => {
-    let publicacion = await publicacionData.getPublicacion(req.params.id)
+router.get('/publicacion-user/:id', async (req,res) => {
+    let publicaciones = await publicacionData.getPublicacionesUsuario(req.params.id)
+    if(publicaciones)
+        res.json(publicaciones)
+    else
+        res.status(404).send('publicaciones not found')
+})
+
+router.get('/publicacion-categoria/:id', async (req,res) => {
+    let publicacion = await publicacionData.getPublicacionesCategoria(req.params.id)
     if(publicacion)
         res.json(publicacion)
     else
-        res.status(404).send('publicacion not found')
+        res.status(404).send('publicaciones not found')
 })
 
 router.post('/', async (req,res) => {
     const schema = joi.object({
         titulo: joi.string().min(1).required(),
-        creador: joi.string().min(1).required(),
-        categoria: joi.string().min(1).required(),
+        idUsuario: joi.string().min(1).required(),
+        idCategoria: joi.string().min(1).required(),
         cantBuscada: joi.number().min(1).max(200).required(),
     })
     const result  = schema.validate(req.body)
