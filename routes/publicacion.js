@@ -47,12 +47,12 @@ router.post('/', async (req,res) => {
 
 router.put('/:id', async (req,res) => {
     const publicacion = req.body.publicacion
-    const updatedPublicaicon = await publicacionData.updatePublicacion({
+    const updatedPublicacion = await publicacionData.updatePublicacion({
         ...publicacion,
         _id: req.params.id
     })
-    if(updatedPublicaicon)
-        res.json(updatedPublicaicon)
+    if(updatedPublicacion)
+        res.json(updatedPublicacion)
     else
         res.status(404).send('Publicacion not updated')
 })
@@ -63,7 +63,8 @@ router.delete('/:id', async (req,res) => {
         await publicacionData.deletePublicacion(req.params.id)
         res.status(200).send('Publicacion deleted')
     }
-    res.status(404).send('Publicacion not found')
+    else
+        res.status(404).send('Publicacion not found')
 })
 
 module.exports = router

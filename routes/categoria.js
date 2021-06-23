@@ -53,7 +53,8 @@ router.delete('/:id', async (req,res) => {
         await categoriaData.deleteCategoria(req.params.id)
         res.status(200).send('Categoria deleted')
     }
-    res.status(404).send('Categoria not found')
+    else
+        res.status(404).send('Categoria not found')
 })
 
 module.exports = router
