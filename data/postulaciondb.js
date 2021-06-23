@@ -10,12 +10,13 @@ async function getPostulacionesxUsuario(idUsuario){
     return postulaciones;
 }
 
-async function getPostulacionesxPublicacion(idPublicacion){
+async function getPostulacionesxPublicacion(idPublicacions){
     const clientmongo = await connection.getConnection();
     const postulaciones = await clientmongo.db('Proyecto_final')
                     .collection('postulacion')
-                    .find({idPublicacion: idPublicacion})
+                    .find({idPublicacion: idPublicacions})
                     .toArray();
+    console.log("asffas", postulaciones)
     return postulaciones;
 }
 

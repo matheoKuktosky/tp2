@@ -1,10 +1,17 @@
 const express = require('express')
 const router = express.Router()
 const publicacionData = require('../data/publicaciondb')
+const postulacionData = require('../data/postulaciondb')
 const joi = require('joi')
 
 router.get('/', async (req, res, next) => {
     let publicaciones = await publicacionData.getPublicaciones()
+    publicaciones.forEach(async publicacion => {
+        let idPublicacion = publicacion._id.toString();
+        let postulaciones = await postulacionData.getPostulacionesxPublicacion(idPublicacion)
+        console.log("publicacion", typeof idPublicacion === "string")
+        publicaciones = {...publicaciones, postulaciones}
+    });
     res.json(publicaciones)
 })
 
