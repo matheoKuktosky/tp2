@@ -77,14 +77,16 @@ router.put('/:id', async (req,res) => {
 })
 
 router.delete('/:id', async (req,res) => {
-    let publicacion = await publicacionData.getPublicacion(req.params.id)
-    if(publicacion){
-        await publicacionData.deletePublicacion(req.params.id)
-        res.status(200).send('Publicacion deleted')
-    }
-    else
-        res.status(404).send('Publicacion not found')
+    await publicacionData.getPublicacion(req.params.id).then(async pub => {
+        if(pub){
+            await publicacionData.deletePublicacion(req.params.id)
+            await postulacionData.deletePostulacionesxPublicacion(req.params.id)
+            res.status(200).send('Publicacion deleted')
+        }
+        else{
+            res.status(404).send('Publicacion not found')
+        }
+    })
 })
 
 module.exports = router
-

@@ -10,11 +10,11 @@ async function getPostulacionesxUsuario(idUsuario){
     return postulaciones;
 }
 
-async function getPostulacionesxPublicacion(idPublicacions){
+async function getPostulacionesxPublicacion(idPublicacion){
     const clientmongo = await connection.getConnection();
     const postulaciones = await clientmongo.db('Proyecto_final')
                     .collection('postulacion')
-                    .find({idPublicacion: idPublicacions})
+                    .find({idPublicacion: idPublicacion})
                     .toArray();
     return postulaciones;
 }
@@ -56,4 +56,12 @@ async function deletePostulacion(id){
     return result;
 }
 
-module.exports = {getPostulacionesxUsuario, getPostulacion, getPostulacionesxPublicacion, addPostulacion, updatePostulacion, deletePostulacion};
+async function deletePostulacionesxPublicacion(idPublicacion){
+    const clientmongo = await connection.getConnection();
+    const result = await clientmongo.db('Proyecto_final')
+                    .collection('postulacion')
+                    .deleteMany({idPublicacion: idPublicacion});
+    return result;
+}
+
+module.exports = {getPostulacionesxUsuario, getPostulacion, getPostulacionesxPublicacion, addPostulacion, updatePostulacion, deletePostulacion, deletePostulacionesxPublicacion};
