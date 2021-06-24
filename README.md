@@ -21,6 +21,12 @@ npm i
 ```
 npm start
 ```
+4. .env
+
+```
+MONGO_URI = mongodb+srv://admin:admin@cluster0.i5das.mongodb.net/Projecto_final?retryWrites=true&w=majority
+SECRET = secretPassword
+```
 
 ## Entidades
 
