@@ -6,7 +6,6 @@ require('dotenv').config();
 
 async function getUsers(){
     const clientmongo = await connection.getConnection();
-    console.log(clientmongo);
     const users = await clientmongo.db('Proyecto_final')
                         .collection('users')
                         .find()
@@ -48,7 +47,6 @@ async function updateUser(user){
             mail: user.mail
         }
     };
-    console.log(newvalues)
     const result = await clientmongo.db('Proyecto_final')
                     .collection('users')
                     .updateOne(query, newvalues);

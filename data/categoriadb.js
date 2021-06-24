@@ -33,7 +33,6 @@ async function updateCategoria(categoria){
             nombre: categoria.nombre
         }
     };
-    console.log(newvalues)
     const result = await clientmongo.db('Proyecto_final')
                     .collection('categoria')
                     .updateOne(query, newvalues);

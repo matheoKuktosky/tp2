@@ -16,16 +16,14 @@ async function getPostulacionesxPublicacion(idPublicacions){
                     .collection('postulacion')
                     .find({idPublicacion: idPublicacions})
                     .toArray();
-    console.log("asffas", postulaciones)
     return postulaciones;
 }
 
 async function getPostulacion(id){
     const clientmongo = await connection.getConnection();
-   console.log(clientmongo);
-    const publicacion = await clientmongo.db('Proyecto_final')
-                    .collection('postulacion')
-                    .findOne({_id: new objectId(id)});
+   const publicacion = await clientmongo.db('Proyecto_final')
+            .collection('postulacion')
+            .findOne({_id: new objectId(id)});
     return publicacion;
 }
 
@@ -44,7 +42,6 @@ async function updatePostulacion(postulacion){
             estado: postulacion.estado
         }
     };
-    console.log(newvalues)
     const result = await clientmongo.db('Proyecto_final')
                     .collection('postulacion')
                     .updateOne(query, newvalues);

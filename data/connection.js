@@ -11,7 +11,6 @@ async function getConnection(){
         try {
             instance = await client.connect();
         } catch (err) {
-            console.log(err.message);
             throw new Error('problemas al conectarse con mongo');
         }
     }

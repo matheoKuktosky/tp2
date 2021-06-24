@@ -4,31 +4,43 @@ const publicacionData = require('../data/publicaciondb')
 const postulacionData = require('../data/postulaciondb')
 const joi = require('joi')
 
+const getPostulacionesXpub = async(pubs) => {
+    let arrayPubs = await Promise.all(pubs.map(async pub => {
+        let idPublicacion = pub._id.toString()
+        let post = await postulacionData.getPostulacionesxPublicacion(idPublicacion)
+        let newpub = {...pub, postulaciones: post}
+        return newpub
+    }))
+    return arrayPubs
+}
+
 router.get('/', async (req, res, next) => {
-    let publicaciones = await publicacionData.getPublicaciones()
-    publicaciones.forEach(async publicacion => {
-        let idPublicacion = publicacion._id.toString();
-        let postulaciones = await postulacionData.getPostulacionesxPublicacion(idPublicacion)
-        console.log("publicacion", typeof idPublicacion === "string")
-        publicaciones = {...publicaciones, postulaciones}
-    });
-    res.json(publicaciones)
+    await publicacionData.getPublicaciones()
+    .then(async pubs =>  getPostulacionesXpub(pubs))
+    .then(result =>res.status(200).json(result))
+    
 })
 
 router.get('/publicacion-user/:id', async (req,res) => {
-    let publicaciones = await publicacionData.getPublicacionesUsuario(req.params.id)
-    if(publicaciones)
-        res.json(publicaciones)
-    else
-        res.status(404).send('publicaciones not found')
+    await publicacionData.getPublicacionesUsuario(req.params.id)
+    .then(async pubs => getPostulacionesXpub(pubs))
+    .then(result => {
+        if(result)
+            res.status(200).json(result)
+        else
+            res.status(404).send('publicaciones not found')
+    })
 })
 
 router.get('/publicacion-categoria/:id', async (req,res) => {
-    let publicacion = await publicacionData.getPublicacionesCategoria(req.params.id)
-    if(publicacion)
-        res.json(publicacion)
-    else
-        res.status(404).send('publicaciones not found')
+    await publicacionData.getPublicacionesCategoria(req.params.id)
+    .then(async pubs => getPostulacionesXpub(pubs))
+    .then(result => {
+        if(result)
+            res.status(200).json(result)
+        else
+            res.status(404).send('publicaciones not found')
+    })
 })
 
 router.post('/', async (req,res) => {

@@ -3,7 +3,6 @@ let objectId = require('mongodb').ObjectId;
 
 async function getPublicaciones(){
     const clientmongo = await connection.getConnection();
-   console.log(clientmongo);
     const publicacion = await clientmongo.db('Proyecto_final')
                     .collection('publicacion')
                     .find()
@@ -12,9 +11,8 @@ async function getPublicaciones(){
 }
 
 async function getPublicacionesUsuario(id){
-    const clientmongo = await connection.getConnection();
-   console.log(clientmongo);
-    const publicacion = await clientmongo.db('Proyecto_final')
+   const clientmongo = await connection.getConnection();
+   const publicacion = await clientmongo.db('Proyecto_final')
                     .collection('publicacion')
                     .find({idUsuario: id})
                     .toArray();
@@ -23,7 +21,6 @@ async function getPublicacionesUsuario(id){
 
 async function getPublicacionesCategoria(id){
     const clientmongo = await connection.getConnection();
-   console.log(clientmongo);
     const publicacion = await clientmongo.db('Proyecto_final')
                     .collection('publicacion')
                     .find({idCategoria: id})
@@ -55,7 +52,6 @@ async function updatePublicacion(publicacion){
             cantidadPostulantes: publicacion.cantidadPostulantes
         }
     };
-    console.log(newvalues)
     const result = await clientmongo.db('Proyecto_final')
                     .collection('publicacion')
                     .updateOne(query, newvalues);
