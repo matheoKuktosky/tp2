@@ -45,6 +45,7 @@ async function updatePostulacion(postulacion){
     const result = await clientmongo.db('Proyecto_final')
                     .collection('postulacion')
                     .updateOne(query, newvalues);
+    
     return result;
 }
 

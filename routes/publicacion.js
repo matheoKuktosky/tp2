@@ -2,13 +2,23 @@ const express = require('express')
 const router = express.Router()
 const publicacionData = require('../data/publicaciondb')
 const postulacionData = require('../data/postulaciondb')
+const usuarioData = require('../data/usersdb')
+const categoriaData = require('../data/categoriadb')
 const joi = require('joi')
 
 const getPostulacionesXpub = async(pubs) => {
     let arrayPubs = await Promise.all(pubs.map(async pub => {
         let idPublicacion = pub._id.toString()
-        let post = await postulacionData.getPostulacionesxPublicacion(idPublicacion)
-        let newpub = {...pub, postulaciones: post}
+        let posts = await postulacionData.getPostulacionesxPublicacion(idPublicacion)
+        .then(async posts => await Promise.all(posts.map(async post  =>{
+            let idUsuario = post.idUsuario
+            let usuario = await usuarioData.getUser(idUsuario)
+            let newPost = {...post, username: usuario.username}
+            return newPost
+        })))
+        let userCreador = await usuarioData.getUser(pub.idUsuario)
+        let categoria = await categoriaData.getCategoria(pub.idCategoria)
+        let newpub = {...pub, creador: userCreador.username, categoria: categoria.nombre, postulaciones: posts}
         return newpub
     }))
     return arrayPubs
@@ -17,7 +27,7 @@ const getPostulacionesXpub = async(pubs) => {
 router.get('/', async (req, res, next) => {
     await publicacionData.getPublicaciones()
     .then(async pubs =>  getPostulacionesXpub(pubs))
-    .then(result =>res.status(200).json(result))
+    .then(result => res.status(200).json(result))
     
 })
 

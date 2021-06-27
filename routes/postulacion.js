@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const postulacionData = require('../data/postulaciondb')
+const usuarioData = require('../data/usersdb')
 const joi = require('joi')
 
 router.get('/mis-postulaciones/:idUsuario', async (req, res, next) => {
@@ -47,8 +48,17 @@ router.put('/:id', async (req,res) => {
         ...postulacion,
         _id: req.params.id
     })
-    if(updatePostulacion)
-        res.json(updatePostulacion)
+    if(updatePostulacion){
+        const updatedPostulacion = await postulacionData.getPostulacion(req.params.id)
+        .then(async post =>{
+            let idUsuario = post.idUsuario
+            let usuario = await usuarioData.getUser(idUsuario)
+            let newPost = {...post, username: usuario.username}
+            return newPost
+            }
+        )
+        res.json(updatedPostulacion)
+    }
     else
         res.status(404).send('Postulacion not updated')
 })
