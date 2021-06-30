@@ -5,6 +5,7 @@ const postulacionData = require('../data/postulaciondb')
 const usuarioData = require('../data/usersdb')
 const categoriaData = require('../data/categoriadb')
 const joi = require('joi')
+const auth = require('../middleware/auth')
 
 const getPostulacionesXpub = async(pubs) => {
     let arrayPubs = await Promise.all(pubs.map(async pub => {
@@ -24,7 +25,7 @@ const getPostulacionesXpub = async(pubs) => {
     return arrayPubs
 }
 
-router.get('/', async (req, res, next) => {
+router.get('/', auth, async (req, res, next) => {
     await publicacionData.getPublicaciones()
     .then(async pubs =>  getPostulacionesXpub(pubs))
     .then(result => res.status(200).json(result))
