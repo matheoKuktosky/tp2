@@ -46,10 +46,11 @@ async function addPublicacion(publicacion){
 
 async function updatePublicacion(publicacion){
     const clientmongo = await connection.getConnection();
+    const oldPublicacion = await getPublicacion(publicacion._id)
     const query = {_id: new objectId(publicacion._id)};
     const newvalues = { $set:{
-            nombre: publicacion.nombre,
-            cantidadPostulantes: publicacion.cantidadPostulantes
+            titulo: publicacion.titulo ?? oldPublicacion.titulo,
+            cantBuscada: publicacion.cantBuscada ?? oldPublicacion.cantBuscada
         }
     };
     const result = await clientmongo.db('Proyecto_final')
