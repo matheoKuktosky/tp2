@@ -40,11 +40,12 @@ async function addUser(user){
 
 async function updateUser(user){
     const clientmongo = await connection.getConnection();
+    const oldUser = await getUser(user._id)
     const query = {_id: new objectId(user._id)};
     const newvalues = { $set:{
-            username: user.username,
-            password: user.password,
-            mail: user.mail
+            username: user.username ?? oldUser.username,
+            password: user.password ?? oldUser.password,
+            mail: user.mail ?? oldUser.mail
         }
     };
     const result = await clientmongo.db('Proyecto_final')

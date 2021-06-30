@@ -48,7 +48,7 @@ router.put('/:id', async (req,res) => {
     const user = req.body.user
     const updatedUser = await dataUser.updateUser({
         ...user,
-        id: req.params.id
+        _id: req.params.id
     })
     if(updatedUser)
         res.json(updatedUser)
