@@ -25,7 +25,7 @@ const getPostulacionesXpub = async(pubs) => {
     return arrayPubs
 }
 
-router.get('/', auth, async (req, res, next) => {
+router.get('/', async (req, res, next) => {
     await publicacionData.getPublicaciones()
     .then(async pubs =>  getPostulacionesXpub(pubs))
     .then(result => res.status(200).json(result))
